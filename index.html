@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071d28">
+  <title>HO 229 · Mesa de navegación en español</title>
+  <meta name="description" content="Aprende a usar las tablas HO 229 en español mediante lecciones, un ejemplo guiado, práctica y evaluación.">
+  <style>
+    :root {
+      --ink: #10212a;
+      --muted: #5d6b71;
+      --paper: #f5f0e5;
+      --paper-2: #e9dfcc;
+      --navy: #071d28;
+      --navy-2: #0c3341;
+      --teal: #1a6c73;
+      --aqua: #88c9c4;
+      --gold: #c89242;
+      --coral: #d9684d;
+      --line: rgba(16, 33, 42, .16);
+      --shadow: 0 22px 60px rgba(3, 19, 27, .16);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 20% -10%, rgba(136, 201, 196, .32), transparent 32rem),
+        linear-gradient(180deg, #f8f4ea 0%, #f2ecdf 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; }
+    .shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 30;
+      backdrop-filter: blur(18px);
+      background: rgba(245, 240, 229, .86);
+      border-bottom: 1px solid rgba(16, 33, 42, .09);
+    }
+    .topbar .shell { display: flex; align-items: center; gap: 22px; min-height: 68px; }
+    .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; font-weight: 850; letter-spacing: -.02em; }
+    .brand-mark { width: 34px; height: 34px; border-radius: 50%; background: var(--navy); display: grid; place-items: center; color: var(--paper); box-shadow: inset 0 0 0 5px var(--aqua); }
+    .brand-mark::after { content: "✦"; font-size: 13px; }
+    nav { display: flex; gap: 7px; margin-left: auto; }
+    nav a { padding: 9px 12px; color: var(--muted); text-decoration: none; font-size: .9rem; font-weight: 700; border-radius: 999px; }
+    nav a:hover, nav a:focus-visible { color: var(--navy); background: rgba(26,108,115,.1); outline: none; }
+    .hero { padding: 72px 0 48px; overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: 1.12fr .88fr; align-items: center; gap: 52px; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; color: var(--teal); font-weight: 850; text-transform: uppercase; letter-spacing: .14em; font-size: .75rem; }
+    .eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--gold); }
+    h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(3.2rem, 7vw, 6.4rem); line-height: .91; letter-spacing: -.055em; margin: 18px 0 24px; font-weight: 500; }
+    h1 em { color: var(--teal); font-style: italic; }
+    .lead { max-width: 680px; font-size: clamp(1.08rem, 2vw, 1.28rem); color: var(--muted); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .btn { border: 0; border-radius: 999px; padding: 13px 18px; font-weight: 850; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn.primary { background: var(--navy); color: white; box-shadow: 0 10px 25px rgba(7,29,40,.22); }
+    .btn.secondary { background: transparent; color: var(--navy); border: 1px solid rgba(7,29,40,.24); }
+    .hero-note { margin-top: 18px; color: var(--muted); font-size: .82rem; }
+    .instrument { position: relative; min-height: 500px; display: grid; place-items: center; }
+    .compass { width: min(460px, 90vw); aspect-ratio: 1; border-radius: 50%; position: relative; background: var(--navy); color: var(--paper); box-shadow: var(--shadow), inset 0 0 0 18px rgba(136,201,196,.11), inset 0 0 0 20px rgba(255,255,255,.09); }
+    .compass::before, .compass::after { content: ""; position: absolute; inset: 8%; border-radius: 50%; border: 1px solid rgba(255,255,255,.18); }
+    .compass::after { inset: 18%; border-style: dashed; border-color: rgba(200,146,66,.5); }
+    .cross-v, .cross-h { position: absolute; left: 50%; top: 10%; bottom: 10%; width: 1px; background: rgba(255,255,255,.18); }
+    .cross-h { left: 10%; right: 10%; top: 50%; bottom: auto; width: auto; height: 1px; }
+    .needle { position: absolute; left: 50%; top: 16%; width: 2px; height: 34%; background: var(--coral); transform-origin: 50% 100%; transform: rotate(28deg); }
+    .needle::before { content: ""; position: absolute; top: -9px; left: -5px; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 12px solid var(--coral); }
+    .hub { position: absolute; width: 20px; height: 20px; background: var(--gold); border: 5px solid var(--paper); border-radius: 50%; left: calc(50% - 10px); top: calc(50% - 10px); }
+    .cardinal { position: absolute; font-family: Georgia,serif; font-weight: 700; font-size: 1.2rem; color: var(--aqua); }
+    .cardinal.n { top: 7%; left: 50%; transform: translateX(-50%); }
+    .cardinal.s { bottom: 7%; left: 50%; transform: translateX(-50%); }
+    .cardinal.e { right: 8%; top: 50%; transform: translateY(-50%); }
+    .cardinal.w { left: 8%; top: 50%; transform: translateY(-50%); }
+    .dial-copy { position: absolute; inset: 30%; border-radius: 50%; display: grid; place-content: center; text-align: center; background: rgba(7,29,40,.72); backdrop-filter: blur(4px); }
+    .dial-copy strong { font-family: Georgia,serif; font-size: 2.2rem; color: var(--gold); }
+    .dial-copy span { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--aqua); }
+    .mini-readout { position: absolute; bottom: 18px; right: -8px; background: var(--paper); color: var(--ink); border-radius: 16px; padding: 14px 18px; box-shadow: var(--shadow); border: 1px solid var(--line); }
+    .mini-readout small { color: var(--muted); display: block; }
+    .mini-readout b { font-size: 1.3rem; }
+    .section { padding: 68px 0; }
+    .section.dark { background: var(--navy); color: #edf4f2; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 28px; }
+    h2 { font-family: Georgia,serif; font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 500; line-height: 1.02; letter-spacing: -.035em; margin: 0; }
+    .section-head p { max-width: 520px; color: var(--muted); margin: 0; }
+    .dark .section-head p { color: #a9bdc1; }
+    .progress-card { background: rgba(255,255,255,.72); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; margin-bottom: 20px; box-shadow: 0 10px 35px rgba(10,32,40,.06); }
+    .progress-meta { display: flex; justify-content: space-between; gap: 16px; align-items: center; font-weight: 800; }
+    .progress-track { height: 10px; border-radius: 999px; background: var(--paper-2); overflow: hidden; margin-top: 12px; }
+    .progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal), var(--aqua)); border-radius: inherit; transition: width .5s ease; }
+    .lesson-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .lesson { min-height: 188px; border: 1px solid var(--line); background: rgba(255,255,255,.58); border-radius: 18px; padding: 18px; display: flex; flex-direction: column; text-align: left; color: var(--ink); transition: transform .18s ease, border-color .18s ease, background .18s ease; }
+    .lesson:hover, .lesson.active { transform: translateY(-4px); border-color: rgba(26,108,115,.6); background: white; }
+    .lesson.done { box-shadow: inset 0 -4px 0 var(--teal); }
+    .lesson-num { width: 31px; height: 31px; border-radius: 50%; display: grid; place-items: center; background: var(--navy); color: white; font-size: .8rem; font-weight: 850; }
+    .lesson h3 { margin: 18px 0 8px; font-size: 1.05rem; line-height: 1.2; }
+    .lesson p { margin: 0; color: var(--muted); font-size: .88rem; }
+    .lesson-status { margin-top: auto; padding-top: 14px; font-size: .76rem; font-weight: 850; color: var(--teal); }
+    .lesson-panel { display: none; margin-top: 18px; border-radius: var(--radius); background: white; border: 1px solid var(--line); padding: clamp(22px, 4vw, 40px); box-shadow: var(--shadow); }
+    .lesson-panel.open { display: grid; grid-template-columns: 1fr .85fr; gap: 34px; animation: rise .3s ease both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+    .lesson-panel h3 { font-family: Georgia,serif; font-size: 2rem; margin: 0 0 10px; }
+    .lesson-panel h4 { margin: 22px 0 8px; color: var(--teal); }
+    .lesson-panel ul, .lesson-panel ol { padding-left: 20px; }
+    .callout { border-left: 4px solid var(--gold); padding: 14px 18px; background: #fbf6e9; border-radius: 0 14px 14px 0; }
+    .formula { background: var(--navy); color: #eef6f4; border-radius: 16px; padding: 18px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.02rem; overflow-x: auto; }
+    .visual-card { min-height: 290px; background: linear-gradient(160deg, #0d3947, #061922); border-radius: 20px; color: white; padding: 24px; position: relative; overflow: hidden; }
+    .visual-card::after { content: ""; position: absolute; width: 220px; height: 220px; border: 1px dashed rgba(136,201,196,.35); border-radius: 50%; right: -60px; top: -50px; }
+    .term-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; position: relative; z-index: 2; }
+    .term { border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05); padding: 13px; border-radius: 12px; }
+    .term b { display: block; color: var(--gold); font-family: Georgia,serif; font-size: 1.35rem; }
+    .term span { font-size: .8rem; color: #bad0d2; }
+    .complete { margin-top: 24px; }
+    .decision-board { display: grid; grid-template-columns: .9fr 1.1fr; gap: 24px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius); padding: clamp(20px,4vw,34px); }
+    .field-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+    label { display: grid; gap: 6px; color: inherit; font-size: .82rem; font-weight: 800; }
+    input, select { min-width: 0; border: 1px solid rgba(16,33,42,.2); background: white; color: var(--ink); border-radius: 12px; padding: 11px 12px; }
+    .dark input, .dark select { border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.08); color: white; }
+    .dark select option { color: var(--ink); }
+    input:focus, select:focus { outline: 3px solid rgba(136,201,196,.28); border-color: var(--aqua); }
+    .route { display: grid; gap: 12px; }
+    .route-step { display: grid; grid-template-columns: 42px 1fr; gap: 12px; align-items: start; padding: 14px; border: 1px solid rgba(255,255,255,.12); border-radius: 14px; background: rgba(255,255,255,.04); }
+    .route-step .badge { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: var(--gold); color: var(--navy); font-weight: 900; }
+    .route-step strong { display: block; }
+    .route-step span { color: #a9bdc1; font-size: .9rem; }
+    .trainer { display: grid; grid-template-columns: 290px 1fr; gap: 20px; align-items: start; }
+    .stepper { position: sticky; top: 90px; display: grid; gap: 8px; }
+    .step-tab { text-align: left; padding: 13px 14px; border-radius: 13px; background: transparent; border: 1px solid var(--line); color: var(--muted); font-weight: 780; }
+    .step-tab.active { background: var(--navy); color: white; border-color: var(--navy); }
+    .workbench { background: white; border: 1px solid var(--line); border-radius: var(--radius); min-height: 530px; padding: clamp(22px, 4vw, 38px); box-shadow: var(--shadow); }
+    .step-content { display: none; }
+    .step-content.active { display: block; animation: rise .28s ease both; }
+    .step-kicker { color: var(--teal); font-weight: 900; font-size: .78rem; text-transform: uppercase; letter-spacing: .1em; }
+    .workbench h3 { font-family: Georgia,serif; font-size: clamp(1.8rem,4vw,2.7rem); margin: 6px 0 12px; }
+    .data-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin: 20px 0; }
+    .datum { background: var(--paper); border-radius: 13px; padding: 13px; }
+    .datum small { display: block; color: var(--muted); }
+    .datum b { display: block; font-size: 1.05rem; margin-top: 4px; }
+    .mock-table { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; margin: 18px 0; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 11px 13px; border-bottom: 1px solid var(--line); text-align: center; white-space: nowrap; }
+    th { background: var(--navy); color: white; font-size: .78rem; letter-spacing: .03em; }
+    tr:last-child td { border-bottom: 0; }
+    tr.highlight td { background: #e4f1ed; font-weight: 850; }
+    .answer-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; margin-top: 20px; }
+    .answer-row label { min-width: 180px; }
+    .feedback { min-height: 24px; font-weight: 820; font-size: .9rem; }
+    .feedback.good { color: var(--teal); }
+    .feedback.bad { color: var(--coral); }
+    .step-actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 24px; }
+    .equation-line { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 8px; margin: 20px 0; }
+    .equation-box { background: var(--paper); border-radius: 14px; padding: 16px; text-align: center; }
+    .equation-box small { display: block; color: var(--muted); }
+    .equation-box b { font-family: Georgia,serif; font-size: 1.35rem; }
+    .quiz-layout { display: grid; grid-template-columns: .7fr 1.3fr; gap: 26px; }
+    .quiz-score { background: var(--navy); color: white; border-radius: var(--radius); padding: 28px; min-height: 280px; }
+    .score-ring { width: 150px; height: 150px; border-radius: 50%; display: grid; place-content: center; text-align: center; margin: 20px auto; background: conic-gradient(var(--gold) var(--score, 0%), rgba(255,255,255,.1) 0); position: relative; }
+    .score-ring::before { content: ""; position: absolute; inset: 12px; border-radius: 50%; background: var(--navy); }
+    .score-ring b, .score-ring span { position: relative; z-index: 1; }
+    .score-ring b { font-size: 2rem; }
+    .score-ring span { color: #a9bdc1; font-size: .75rem; }
+    .question-card { background: white; border-radius: var(--radius); padding: 26px; border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .question-meta { color: var(--teal); font-weight: 900; font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; }
+    .question-card h3 { font-family: Georgia,serif; font-size: 1.65rem; line-height: 1.2; }
+    .options { display: grid; gap: 10px; }
+    .option { text-align: left; padding: 13px 14px; border-radius: 13px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); font-weight: 720; }
+    .option:hover { border-color: var(--teal); }
+    .option.correct { background: #dff0e9; border-color: var(--teal); }
+    .option.wrong { background: #f7e3dc; border-color: var(--coral); }
+    .option:disabled { cursor: default; opacity: 1; }
+    .explain { padding: 14px; border-radius: 12px; background: #eef4f3; margin-top: 14px; display: none; }
+    .explain.show { display: block; }
+    .glossary-tools { display: flex; gap: 10px; margin-bottom: 18px; }
+    .glossary-tools input { flex: 1; }
+    .glossary-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+    .gloss { background: rgba(255,255,255,.64); border: 1px solid var(--line); border-radius: 16px; padding: 17px; }
+    .gloss b { font-family: Georgia,serif; font-size: 1.28rem; color: var(--teal); }
+    .gloss p { color: var(--muted); font-size: .88rem; margin: 5px 0 0; }
+    .quick-ref { display: grid; grid-template-columns: 1.1fr .9fr; gap: 20px; background: #fff; border-radius: var(--radius); border: 1px solid var(--line); padding: clamp(22px,4vw,38px); box-shadow: var(--shadow); }
+    .quick-list { counter-reset: ref; display: grid; gap: 12px; }
+    .quick-item { counter-increment: ref; display: grid; grid-template-columns: 38px 1fr; gap: 12px; }
+    .quick-item::before { content: counter(ref); width: 34px; height: 34px; border-radius: 50%; background: var(--teal); color: white; display: grid; place-items: center; font-weight: 900; }
+    .warning { background: #fff2d7; border: 1px solid #e7c37c; border-radius: 16px; padding: 18px; }
+    footer { background: #03131b; color: #b8c7c8; padding: 38px 0; }
+    footer .shell { display: flex; justify-content: space-between; gap: 26px; }
+    footer strong { color: white; }
+    footer p { max-width: 760px; margin: 5px 0; font-size: .88rem; }
+    .toast { position: fixed; z-index: 50; bottom: 22px; left: 50%; transform: translate(-50%, 20px); background: var(--navy); color: white; padding: 12px 18px; border-radius: 999px; opacity: 0; pointer-events: none; transition: .25s ease; box-shadow: var(--shadow); }
+    .toast.show { opacity: 1; transform: translate(-50%,0); }
+    @media (max-width: 920px) {
+      nav { display: none; }
+      .hero-grid, .decision-board, .lesson-panel.open, .trainer, .quiz-layout, .quick-ref { grid-template-columns: 1fr; }
+      .instrument { min-height: 390px; }
+      .compass { width: min(380px, 88vw); }
+      .lesson-grid { grid-template-columns: repeat(2,1fr); }
+      .lesson:last-child { grid-column: 1 / -1; }
+      .stepper { position: static; grid-template-columns: repeat(3,1fr); }
+      .step-tab { font-size: .8rem; }
+      .glossary-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 600px) {
+      .shell { width: min(100% - 22px, 1180px); }
+      .hero { padding-top: 46px; }
+      h1 { font-size: 3.65rem; }
+      .section { padding: 50px 0; }
+      .section-head { align-items: start; flex-direction: column; }
+      .lesson-grid, .field-grid, .data-strip, .glossary-grid { grid-template-columns: 1fr; }
+      .lesson:last-child { grid-column: auto; }
+      .stepper { display: flex; overflow-x: auto; padding-bottom: 4px; }
+      .step-tab { min-width: 150px; }
+      .equation-line { grid-template-columns: 1fr; }
+      .equation-line > span { text-align: center; }
+      footer .shell { flex-direction: column; }
+      .mini-readout { right: 0; }
+    }
+    @media print {
+      .topbar, .hero, #lecciones, #decisor, #practica, #evaluacion, #glosario, footer, .no-print { display: none !important; }
+      body { background: white; }
+      #referencia { display: block !important; padding: 0; }
+      .quick-ref { box-shadow: none; border: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell">
+      <a class="brand" href="#inicio"><span class="brand-mark"></span> HO 229 · En español</a>
+      <nav aria-label="Navegación principal">
+        <a href="#lecciones">Lecciones</a><a href="#decisor">Mapa de decisión</a><a href="#practica">Práctica</a><a href="#evaluacion">Evaluación</a><a href="#glosario">Glosario</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <span class="eyebrow">Cuaderno interactivo · Pub. 229, Vol. 3</span>
+          <h1>Del astro a la <em>posición.</em></h1>
+          <p class="lead">Aprende a leer las tablas de reducción de observaciones HO 229 sin pelearte con el inglés técnico: primero la lógica, después la tabla y por último el cálculo completo.</p>
+          <div class="hero-actions"><a class="btn primary" href="#lecciones">Empezar el recorrido →</a><a class="btn secondary" href="#practica">Ir al ejemplo guiado</a></div>
+          <p class="hero-note">Pensado para el volumen 3: latitudes de 30° a 45°. Tu avance queda guardado en este navegador.</p>
+        </div>
+        <div class="instrument" aria-label="Rosa de los vientos estilizada">
+          <div class="compass"><span class="cross-v"></span><span class="cross-h"></span><span class="cardinal n">N</span><span class="cardinal s">S</span><span class="cardinal e">E</span><span class="cardinal w">W</span><span class="needle"></span><span class="hub"></span><div class="dial-copy"><strong>HO 229</strong><span>altura · azimut</span></div></div>
+          <div class="mini-readout"><small>Ejemplo del manual</small><b>Hc 25° 00,4′</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="lecciones">
+      <div class="shell">
+        <div class="section-head"><div><span class="eyebrow">01 · Comprender</span><h2>La carta antes del rumbo</h2></div><p>Cinco lecciones cortas, de lo conceptual a lo operativo. Abre una tarjeta, repasa y márcala como terminada.</p></div>
+        <div class="progress-card"><div class="progress-meta"><span>Progreso del recorrido</span><span id="progressText">0 de 5 lecciones</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+        <div class="lesson-grid" id="lessonGrid">
+          <button class="lesson active" data-lesson="1"><span class="lesson-num">01</span><h3>Qué resuelve HO 229</h3><p>El triángulo de posición y sus tres respuestas.</p><span class="lesson-status">Abrir lección</span></button>
+          <button class="lesson" data-lesson="2"><span class="lesson-num">02</span><h3>Cómo entrar</h3><p>Latitud, LHA y declinación: los tres argumentos.</p><span class="lesson-status">Abrir lección</span></button>
+          <button class="lesson" data-lesson="3"><span class="lesson-num">03</span><h3>Cómo leer</h3><p>Altura tabular, diferencia y ángulo de azimut.</p><span class="lesson-status">Abrir lección</span></button>
+          <button class="lesson" data-lesson="4"><span class="lesson-num">04</span><h3>Cómo interpolar</h3><p>Corrección por minutos de declinación.</p><span class="lesson-status">Abrir lección</span></button>
+          <button class="lesson" data-lesson="5"><span class="lesson-num">05</span><h3>Cómo cerrar</h3><p>Hc, Zn, intercepto y línea de posición.</p><span class="lesson-status">Abrir lección</span></button>
+        </div>
+
+        <article class="lesson-panel open" data-panel="1">
+          <div><h3>Qué resuelve la tabla</h3><p>HO 229 contiene soluciones precalculadas del triángulo esférico de navegación. Con una posición asumida y los datos del astro, evita resolver trigonometría esférica desde cero.</p><h4>Entradas</h4><ul><li><b>Latitud asumida:</b> grado entero dentro del volumen.</li><li><b>LHA:</b> ángulo horario local del astro, en grado entero.</li><li><b>Declinación:</b> grado entero más un incremento en minutos.</li></ul><div class="callout">El volumen 3 cubre latitudes <b>30° a 45° inclusive</b>. Los otros volúmenes cubren bandas distintas.</div><button class="btn primary complete" data-complete="1">Marcar como terminada</button></div>
+          <div class="visual-card"><p style="color:#a9bdc1;margin-top:0">La tabla devuelve</p><div class="term-grid"><div class="term"><b>ht</b><span>Altura tabular</span></div><div class="term"><b>d</b><span>Diferencia de altura</span></div><div class="term"><b>Z</b><span>Ángulo de azimut</span></div><div class="term"><b>Hc</b><span>Altura calculada, tras interpolar</span></div></div></div>
+        </article>
+        <article class="lesson-panel" data-panel="2">
+          <div><h3>Los tres argumentos de entrada</h3><p>La navegación dentro de la apertura depende de tres decisiones: banda de latitud, pareja de LHA y relación de hemisferios.</p><ol><li>Elige la <b>latitud asumida entera</b>.</li><li>Busca la apertura cuyo encabezado contiene el <b>LHA entero</b>.</li><li>Decide si latitud y declinación son de <b>igual nombre</b> (ambas N o ambas S) o de <b>nombre contrario</b>.</li><li>Entra por la fila del <b>grado entero de declinación</b>.</li></ol><div class="callout">Los minutos de declinación no se buscan en el cuerpo principal: se usan después en la tabla de interpolación.</div><button class="btn primary complete" data-complete="2">Marcar como terminada</button></div>
+          <div class="visual-card"><p style="color:#a9bdc1">Regla visual</p><div class="term-grid"><div class="term"><b>N + N</b><span>Igual nombre</span></div><div class="term"><b>S + S</b><span>Igual nombre</span></div><div class="term"><b>N + S</b><span>Nombre contrario</span></div><div class="term"><b>S + N</b><span>Nombre contrario</span></div></div></div>
+        </article>
+        <article class="lesson-panel" data-panel="3">
+          <div><h3>Leer sin perder la columna</h3><p>En la intersección entre la columna de latitud y la fila de declinación aparecen tres datos.</p><ul><li><b>ht (Tab. Hc):</b> altura calculada para el grado entero de declinación.</li><li><b>d:</b> cuánto varía la altura al aumentar 1° la declinación. Conserva siempre su signo.</li><li><b>Z:</b> ángulo de azimut, que después se convierte a azimut verdadero <b>Zn</b>.</li></ul><div class="callout">Antes de copiar, sigue visualmente la columna desde su encabezado. El error más común no es matemático: es correrse una columna.</div><button class="btn primary complete" data-complete="3">Marcar como terminada</button></div>
+          <div class="visual-card"><p style="color:#a9bdc1">Lectura de ejemplo</p><div class="term-grid"><div class="term"><b>24° 26,8′</b><span>ht</span></div><div class="term"><b>+44,3′</b><span>d</span></div><div class="term"><b>108,6°</b><span>Z</span></div><div class="term"><b>45° N</b><span>Columna de latitud</span></div></div></div>
+        </article>
+        <article class="lesson-panel" data-panel="4">
+          <div><h3>Interpolar la declinación</h3><p>Para los minutos de declinación, la corrección lineal es el producto de la diferencia de altura por el incremento de declinación, dividido por 60.</p><div class="formula">Corrección = d × Dec.Inc. / 60<br>Hc = ht + Corrección (con el signo de d)</div><p>La tabla de interpolación separa el cálculo en decenas y en unidades/decimales. Si <b>d</b> está en cursiva y seguido por un punto, se agrega la corrección de doble segunda diferencia (DSD), que siempre es positiva.</p><button class="btn primary complete" data-complete="4">Marcar como terminada</button></div>
+          <div class="visual-card"><p style="color:#a9bdc1">Ejemplo</p><div class="term-grid"><div class="term"><b>44,3 × 45,5 / 60</b><span>Cálculo</span></div><div class="term"><b>+33,6′</b><span>Corrección</span></div><div class="term"><b>24° 26,8′</b><span>ht</span></div><div class="term"><b>25° 00,4′</b><span>Hc</span></div></div></div>
+        </article>
+        <article class="lesson-panel" data-panel="5">
+          <div><h3>Del resultado a la carta</h3><p>Con la interpolación obtienes <b>Hc</b>. Interpola también Z cuando haga falta, conviértelo a <b>Zn</b> según el cuadrante y compara Hc con la altura observada corregida <b>Ho</b>.</p><div class="formula">Intercepto a = Ho − Hc<br>Ho &gt; Hc → hacia el astro (A / Toward)<br>Ho &lt; Hc → alejándose (T / Away)</div><p>Desde la posición asumida, traza Zn, lleva el intercepto sobre esa dirección y dibuja la línea de posición perpendicular.</p><button class="btn primary complete" data-complete="5">Marcar como terminada</button></div>
+          <div class="visual-card"><svg viewBox="0 0 360 270" width="100%" role="img" aria-label="Esquema de intercepto y línea de posición"><path d="M32 210 L326 55" stroke="#88c9c4" stroke-width="2"/><path d="M110 45 L250 255" stroke="#c89242" stroke-width="5"/><circle cx="170" cy="138" r="7" fill="#f5f0e5"/><text x="178" y="132" fill="#f5f0e5" font-size="14">Punto de intercepto</text><text x="258" y="62" fill="#88c9c4" font-size="13">Zn → astro</text><text x="85" y="58" fill="#c89242" font-size="13">LOP ⟂ Zn</text></svg></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section dark" id="decisor">
+      <div class="shell">
+        <div class="section-head"><div><span class="eyebrow" style="color:var(--aqua)">02 · Orientarse</span><h2>Mapa de decisión</h2></div><p>Introduce los argumentos generales. La herramienta te recuerda qué relación de nombres usar y cómo organizar la búsqueda.</p></div>
+        <div class="decision-board">
+          <div><div class="field-grid">
+            <label>Latitud asumida (°)<input id="latDeg" type="number" min="30" max="45" value="45"></label>
+            <label>Hemisferio<select id="latHem"><option>N</option><option>S</option></select></label>
+            <label>LHA entero (°)<input id="lha" type="number" min="0" max="359" value="60"></label>
+            <label>Declinación (°)<input id="decDeg" type="number" min="0" max="90" value="5"></label>
+            <label>Minutos de declinación<input id="decMin" type="number" min="0" max="59.9" step="0.1" value="45.5"></label>
+            <label>Hemisferio<select id="decHem"><option>N</option><option>S</option></select></label>
+          </div><p id="rangeWarning" class="feedback"></p>
+          </div>
+          <div class="route" aria-live="polite">
+            <div class="route-step"><span class="badge">1</span><div><strong id="volumeResult">Volumen 3</strong><span id="volumeHint">La latitud 45° está dentro de 30°–45°.</span></div></div>
+            <div class="route-step"><span class="badge">2</span><div><strong id="lhaResult">Apertura con LHA 60°</strong><span id="lhaHint">Busca el par complementario impreso en los encabezados.</span></div></div>
+            <div class="route-step"><span class="badge">3</span><div><strong id="nameResult">Igual nombre</strong><span id="nameHint">Latitud N y declinación N.</span></div></div>
+            <div class="route-step"><span class="badge">4</span><div><strong id="rowResult">Fila 5°</strong><span id="rowHint">Reserva 45,5′ para la interpolación.</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="practica">
+      <div class="shell">
+        <div class="section-head"><div><span class="eyebrow">03 · Practicar</span><h2>Una reducción, paso a paso</h2></div><p>Reproduce el ejemplo de interpolación del manual: latitud 45° N, LHA 60°, declinación 5° 45,5′ N.</p></div>
+        <div class="trainer">
+          <aside class="stepper" aria-label="Pasos del ejemplo">
+            <button class="step-tab active" data-step="1">1. Preparar entrada</button><button class="step-tab" data-step="2">2. Extraer datos</button><button class="step-tab" data-step="3">3. Interpolar</button><button class="step-tab" data-step="4">4. Corregir Z</button><button class="step-tab" data-step="5">5. Cerrar cálculo</button><button class="step-tab" data-step="6">6. Trazar LOP</button>
+          </aside>
+          <div class="workbench">
+            <article class="step-content active" data-step-content="1"><span class="step-kicker">Paso 1 de 6</span><h3>Ordena los argumentos</h3><p>Separa grados enteros y minutos. La tabla principal usa los enteros; la interpolación usa el excedente.</p><div class="data-strip"><div class="datum"><small>Latitud</small><b>45° N</b></div><div class="datum"><small>LHA</small><b>60°</b></div><div class="datum"><small>Declinación</small><b>5° N</b></div><div class="datum"><small>Dec. Inc.</small><b>45,5′</b></div></div><div class="callout">Como latitud y declinación son N, la relación es <b>igual nombre</b>.</div><div class="step-actions"><span></span><button class="btn primary next-step">Siguiente →</button></div></article>
+            <article class="step-content" data-step-content="2"><span class="step-kicker">Paso 2 de 6</span><h3>Extrae ht, d y Z</h3><p>En la apertura de LHA 60°, columna de latitud 45° y fila de declinación 5°:</p><div class="mock-table"><table><thead><tr><th>Dec.</th><th>ht (Tab. Hc)</th><th>d</th><th>Z</th></tr></thead><tbody><tr><td>4°</td><td>23° 42,3′</td><td>+44,5′</td><td>—</td></tr><tr class="highlight"><td>5°</td><td>24° 26,8′</td><td>+44,3′</td><td>108,6°</td></tr><tr><td>6°</td><td>25° 11,1′</td><td>+44,0′</td><td>—</td></tr><tr><td>7°</td><td>25° 55,1′</td><td>—</td><td>—</td></tr></tbody></table></div><div class="answer-row"><label>¿Qué signo tiene d?<select id="dSign"><option value="">Elegir…</option><option value="+">Positivo (+)</option><option value="-">Negativo (−)</option></select></label><button class="btn secondary" data-check="dSign" data-answer="+">Comprobar</button><span class="feedback" id="dSignFeedback"></span></div><div class="step-actions"><button class="btn secondary prev-step">← Anterior</button><button class="btn primary next-step">Siguiente →</button></div></article>
+            <article class="step-content" data-step-content="3"><span class="step-kicker">Paso 3 de 6</span><h3>Interpola la altura</h3><p>Aplica la fórmula lineal. En la tabla de interpolación, el manual separa 45,5′ en 40′ y 5,5′: 30,3′ + 3,3′.</p><div class="equation-line"><div class="equation-box"><small>d</small><b>+44,3′</b></div><span>×</span><div class="equation-box"><small>Dec. Inc.</small><b>45,5′</b></div><span>÷ 60 =</span><div class="equation-box"><small>Corrección</small><b>+33,6′</b></div></div><div class="answer-row"><label>Hc en grados y minutos<input id="hcAnswer" inputmode="decimal" placeholder="Ej.: 25° 00,4′"></label><button class="btn secondary" data-check="hcAnswer" data-answer="25 00,4">Comprobar</button><span class="feedback" id="hcAnswerFeedback"></span></div><div class="step-actions"><button class="btn secondary prev-step">← Anterior</button><button class="btn primary next-step">Siguiente →</button></div></article>
+            <article class="step-content" data-step-content="4"><span class="step-kicker">Paso 4 de 6</span><h3>Interpola y convierte Z</h3><p>El ángulo tabular es Z = 108,6°. Para el incremento 45,5′, la corrección aproximada es −0,5°.</p><div class="formula">Z interpolado = 108,6° − 0,5° = 108,1°<br>N 108,1° W → Zn = 360° − 108,1° = 251,9°</div><div class="answer-row"><label>Azimut verdadero Zn<input id="znAnswer" inputmode="decimal" placeholder="grados"></label><button class="btn secondary" data-check="znAnswer" data-answer="251,9">Comprobar</button><span class="feedback" id="znAnswerFeedback"></span></div><div class="step-actions"><button class="btn secondary prev-step">← Anterior</button><button class="btn primary next-step">Siguiente →</button></div></article>
+            <article class="step-content" data-step-content="5"><span class="step-kicker">Paso 5 de 6</span><h3>Compara Ho con Hc</h3><p>Para practicar el cierre, supón una altura observada ya corregida de <b>Ho = 25° 08,9′</b>.</p><div class="equation-line"><div class="equation-box"><small>Ho</small><b>25° 08,9′</b></div><span>−</span><div class="equation-box"><small>Hc</small><b>25° 00,4′</b></div><span>=</span><div class="equation-box"><small>Intercepto</small><b>8,5′ A</b></div></div><div class="callout">Un minuto de arco equivale a una milla náutica: intercepto <b>8,5 M hacia el astro</b>.</div><div class="step-actions"><button class="btn secondary prev-step">← Anterior</button><button class="btn primary next-step">Siguiente →</button></div></article>
+            <article class="step-content" data-step-content="6"><span class="step-kicker">Paso 6 de 6</span><h3>Traza la línea de posición</h3><ol><li>Desde la posición asumida, traza Zn = 251,9°.</li><li>Mide 8,5 M hacia el astro sobre esa dirección.</li><li>Por el punto obtenido, dibuja una perpendicular a Zn.</li></ol><div class="visual-card" style="min-height:220px"><svg viewBox="0 0 600 220" width="100%"><defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#88c9c4"/></marker></defs><line x1="110" y1="60" x2="460" y2="172" stroke="#88c9c4" stroke-width="3" marker-end="url(#arrow)"/><line x1="345" y1="32" x2="270" y2="205" stroke="#c89242" stroke-width="6"/><circle cx="110" cy="60" r="8" fill="#f5f0e5"/><circle cx="315" cy="126" r="8" fill="#d9684d"/><text x="62" y="43" fill="#f5f0e5">Posición asumida</text><text x="374" y="150" fill="#88c9c4">Zn 251,9°</text><text x="238" y="195" fill="#c89242">LOP</text><text x="300" y="112" fill="#f5f0e5">8,5 M A</text></svg></div><div class="step-actions"><button class="btn secondary prev-step">← Anterior</button><button class="btn primary" id="finishPractice">Completar práctica ✓</button></div></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="evaluacion">
+      <div class="shell">
+        <div class="section-head"><div><span class="eyebrow">04 · Verificar</span><h2>Prueba de puente</h2></div><p>Seis preguntas. El objetivo no es memorizar cifras: es reconocer la secuencia correcta y los signos.</p></div>
+        <div class="quiz-layout">
+          <aside class="quiz-score"><h3 style="margin-top:0">Tu marcación</h3><div class="score-ring" id="scoreRing"><b id="scoreNumber">0/6</b><span>respuestas correctas</span></div><p id="scoreMessage">Responde la primera pregunta para comenzar.</p><button class="btn secondary" style="color:white;border-color:rgba(255,255,255,.3)" id="resetQuiz">Reiniciar</button></aside>
+          <div class="question-card"><span class="question-meta" id="questionMeta">Pregunta 1 de 6</span><h3 id="questionText"></h3><div class="options" id="options"></div><div class="explain" id="explain"></div><div class="step-actions"><span></span><button class="btn primary" id="nextQuestion" disabled>Siguiente →</button></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="glosario">
+      <div class="shell">
+        <div class="section-head"><div><span class="eyebrow">05 · Consultar</span><h2>Glosario de guardia</h2></div><p>La notación del manual, traducida al lenguaje que necesitas durante un ejercicio.</p></div>
+        <div class="glossary-tools"><input id="glossarySearch" type="search" placeholder="Buscar: LHA, intercepto, d…" aria-label="Buscar en el glosario"><button class="btn secondary" id="clearSearch">Limpiar</button></div>
+        <div class="glossary-grid" id="glossaryGrid">
+          <article class="gloss"><b>AP</b><p>Posición asumida: punto elegido para efectuar la reducción.</p></article><article class="gloss"><b>Dec. Inc.</b><p>Minutos y décimas que exceden el grado entero de declinación.</p></article><article class="gloss"><b>d</b><p>Diferencia de altura entre dos tabulaciones sucesivas; gobierna la interpolación.</p></article><article class="gloss"><b>DSD</b><p>Doble segunda diferencia. Corrección adicional, siempre positiva, cuando está indicada.</p></article><article class="gloss"><b>Hc</b><p>Altura calculada después de interpolar latitud, declinación o LHA según corresponda.</p></article><article class="gloss"><b>Ho</b><p>Altura observada luego de aplicar las correcciones del sextante.</p></article><article class="gloss"><b>ht / Tab. Hc</b><p>Altura tabular para los argumentos enteros usados al entrar en la tabla.</p></article><article class="gloss"><b>LHA</b><p>Ángulo horario local: distancia angular al oeste del meridiano celeste local.</p></article><article class="gloss"><b>LOP</b><p>Línea de posición: lugar geométrico aproximado compatible con la observación.</p></article><article class="gloss"><b>Intercepto (a)</b><p>Diferencia Ho − Hc expresada en minutos de arco o millas náuticas.</p></article><article class="gloss"><b>Z</b><p>Ángulo de azimut tabular, medido desde el polo elevado según la convención de la tabla.</p></article><article class="gloss"><b>Zn</b><p>Azimut verdadero, de 000° a 360°, medido desde el norte verdadero.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="referencia">
+      <div class="shell">
+        <div class="section-head"><div><span class="eyebrow">Referencia rápida</span><h2>Secuencia en una hoja</h2></div><button class="btn secondary no-print" onclick="window.print()">Imprimir / guardar PDF</button></div>
+        <div class="quick-ref">
+          <div class="quick-list"><div class="quick-item"><div><b>Preparar argumentos</b><br><span>Latitud asumida entera, LHA entero, declinación entera y Dec. Inc.</span></div></div><div class="quick-item"><div><b>Elegir apertura y relación</b><br><span>Confirma volumen, pareja de LHA e igual/contrario nombre.</span></div></div><div class="quick-item"><div><b>Extraer ht, d y Z</b><br><span>Respeta columna, fila y signo de d.</span></div></div><div class="quick-item"><div><b>Interpolar</b><br><span>Corrección = d × Dec. Inc. / 60; agrega DSD si corresponde.</span></div></div><div class="quick-item"><div><b>Obtener Hc y Zn</b><br><span>Suma la corrección con su signo y convierte Z al cuadrante verdadero.</span></div></div><div class="quick-item"><div><b>Calcular y trazar</b><br><span>a = Ho − Hc; lleva el intercepto y dibuja la LOP perpendicular a Zn.</span></div></div></div>
+          <div><div class="warning"><b>Uso responsable</b><p>Esta herramienta enseña el método descrito en la publicación HO 229 y usa ejemplos didácticos. No sustituye cartas, almanaques, avisos ni publicaciones náuticas vigentes; verifica siempre edición, correcciones y procedimientos exigidos a bordo.</p></div><div class="formula" style="margin-top:14px">Hc = ht + d × Dec.Inc. / 60 (+ DSD)<br><br>a = Ho − Hc<br>A si Ho &gt; Hc · T si Ho &lt; Hc</div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="shell"><div><strong>HO 229 · Mesa de navegación</strong><p>Guía didáctica en español basada en las instrucciones de uso de Sight Reduction Tables for Marine Navigation, Pub. 229, Vol. 3.</p></div><p>Progreso local · Sin cuentas · Funciona en computadora, tableta o teléfono</p></div></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const state = { completed: new Set(JSON.parse(localStorage.getItem('ho229-lessons') || '[]')), practice: localStorage.getItem('ho229-practice') === '1' };
+    const lessons = [...document.querySelectorAll('.lesson')];
+    function updateProgress() {
+      lessons.forEach(btn => { const done = state.completed.has(Number(btn.dataset.lesson)); btn.classList.toggle('done', done); btn.querySelector('.lesson-status').textContent = done ? '✓ Terminada' : 'Abrir lección'; });
+      document.getElementById('progressText').textContent = `${state.completed.size} de 5 lecciones`;
+      document.getElementById('progressFill').style.width = `${state.completed.size * 20}%`;
+      localStorage.setItem('ho229-lessons', JSON.stringify([...state.completed]));
+    }
+    function toast(text) { const el = document.getElementById('toast'); el.textContent = text; el.classList.add('show'); clearTimeout(window.toastTimer); window.toastTimer = setTimeout(() => el.classList.remove('show'), 2200); }
+    lessons.forEach(btn => btn.addEventListener('click', () => { const id = btn.dataset.lesson; lessons.forEach(x => x.classList.toggle('active', x === btn)); document.querySelectorAll('.lesson-panel').forEach(p => p.classList.toggle('open', p.dataset.panel === id)); }));
+    document.querySelectorAll('[data-complete]').forEach(btn => btn.addEventListener('click', () => { state.completed.add(Number(btn.dataset.complete)); updateProgress(); toast('Lección guardada como terminada'); }));
+    updateProgress();
+
+    const decisionInputs = ['latDeg','latHem','lha','decDeg','decMin','decHem'].map(id => document.getElementById(id));
+    function updateDecision() {
+      const lat = Math.max(0, Number(document.getElementById('latDeg').value)); const latH = document.getElementById('latHem').value;
+      const lha = ((Number(document.getElementById('lha').value) % 360) + 360) % 360; const dec = Math.max(0, Number(document.getElementById('decDeg').value)); const min = Math.max(0, Number(document.getElementById('decMin').value)); const decH = document.getElementById('decHem').value;
+      const inVol = lat >= 30 && lat <= 45;
+      document.getElementById('volumeResult').textContent = inVol ? 'Volumen 3' : 'Revisa el volumen';
+      document.getElementById('volumeHint').textContent = inVol ? `La latitud ${lat}° está dentro de 30°–45°.` : `${lat}° queda fuera del alcance del volumen 3.`;
+      const pair = lha <= 90 ? 360 - lha : (lha <= 180 ? 360 - lha : (lha <= 270 ? 360 - lha : 360 - lha));
+      document.getElementById('lhaResult').textContent = `Apertura con LHA ${lha.toFixed(0)}°`;
+      document.getElementById('lhaHint').textContent = `El encabezado puede agruparlo con ${pair.toFixed(0)}°; confirma el rótulo superior o inferior.`;
+      const same = latH === decH;
+      document.getElementById('nameResult').textContent = same ? 'Igual nombre' : 'Nombre contrario';
+      document.getElementById('nameHint').textContent = `Latitud ${latH} y declinación ${decH}.`;
+      document.getElementById('rowResult').textContent = `Fila ${dec.toFixed(0)}°`;
+      document.getElementById('rowHint').textContent = `Reserva ${min.toFixed(1).replace('.',',')}′ para la interpolación.`;
+      const warning = document.getElementById('rangeWarning');
+      warning.textContent = min >= 60 ? 'Los minutos deben ser menores que 60.' : (!inVol ? 'Este caso necesita otro volumen de HO 229.' : '');
+      warning.className = 'feedback ' + (warning.textContent ? 'bad' : '');
+    }
+    decisionInputs.forEach(el => el.addEventListener('input', updateDecision)); updateDecision();
+
+    let currentStep = 1;
+    function showStep(n) { currentStep = Math.min(6, Math.max(1,n)); document.querySelectorAll('.step-tab').forEach(b => b.classList.toggle('active', Number(b.dataset.step) === currentStep)); document.querySelectorAll('.step-content').forEach(c => c.classList.toggle('active', Number(c.dataset.stepContent) === currentStep)); }
+    document.querySelectorAll('.step-tab').forEach(btn => btn.addEventListener('click', () => showStep(Number(btn.dataset.step))));
+    document.querySelectorAll('.next-step').forEach(btn => btn.addEventListener('click', () => showStep(currentStep + 1)));
+    document.querySelectorAll('.prev-step').forEach(btn => btn.addEventListener('click', () => showStep(currentStep - 1)));
+    function normalized(value) { return String(value).toLowerCase().replace(/[,]/g,'.').replace(/[°′'’\s]/g,'').replace(/^\+/,''); }
+    document.querySelectorAll('[data-check]').forEach(btn => btn.addEventListener('click', () => { const id = btn.dataset.check; const el = document.getElementById(id); const ok = normalized(el.value) === normalized(btn.dataset.answer); const fb = document.getElementById(id + 'Feedback'); fb.textContent = ok ? 'Correcto. Puedes continuar.' : 'Todavía no. Revisa el signo o la operación.'; fb.className = 'feedback ' + (ok ? 'good' : 'bad'); }));
+    document.getElementById('finishPractice').addEventListener('click', () => { state.practice = true; localStorage.setItem('ho229-practice','1'); toast('Práctica completada y guardada'); });
+
+    const questions = [
+      { q:'¿Qué tres argumentos principales se usan para entrar en HO 229?', o:['Latitud, LHA y declinación','Longitud, GHA y altura observada','Rumbo, velocidad y distancia'], a:0, e:'La posición asumida aporta la latitud y el LHA; el almanaque aporta la declinación.' },
+      { q:'Latitud 40° S y declinación 12° S: ¿qué relación tienen?', o:['Nombre contrario','Igual nombre','No se puede determinar'], a:1, e:'Ambas son sur: tienen igual nombre.' },
+      { q:'¿Para qué se reserva el incremento de declinación?', o:['Para elegir el volumen','Para interpolar entre grados enteros','Para convertir Z en Zn'], a:1, e:'El cuerpo principal usa grados enteros; los minutos y décimas entran en la interpolación.' },
+      { q:'Si d = −32,0′ y Dec. Inc. = 30′, ¿cuál es la corrección lineal?', o:['+16,0′','−16,0′','−32,0′'], a:1, e:'−32,0 × 30 / 60 = −16,0′. El signo de d se conserva.' },
+      { q:'Cuando corresponde una corrección DSD, ¿qué signo tiene?', o:['Siempre positivo','Siempre negativo','El mismo signo que Z'], a:0, e:'El manual indica que la corrección por doble segunda diferencia se suma siempre.' },
+      { q:'Si Ho es mayor que Hc, el intercepto se lleva…', o:['Alejándose del astro','Hacia el astro','Siempre hacia el norte'], a:1, e:'Ho > Hc significa Toward / A: hacia el astro.' }
+    ];
+    let qi = 0, score = 0, answered = false;
+    function renderQuestion() { const item = questions[qi]; answered = false; document.getElementById('questionMeta').textContent = `Pregunta ${qi+1} de ${questions.length}`; document.getElementById('questionText').textContent = item.q; const options = document.getElementById('options'); options.innerHTML = ''; item.o.forEach((text,index) => { const b=document.createElement('button'); b.className='option'; b.textContent=text; b.addEventListener('click',()=>answerQuestion(index)); options.appendChild(b); }); document.getElementById('explain').classList.remove('show'); document.getElementById('nextQuestion').disabled=true; document.getElementById('nextQuestion').textContent = qi === questions.length-1 ? 'Ver resultado' : 'Siguiente →'; }
+    function answerQuestion(index) { if(answered) return; answered=true; const item=questions[qi]; if(index===item.a) score++; [...document.querySelectorAll('.option')].forEach((b,i)=>{ b.disabled=true; if(i===item.a)b.classList.add('correct'); else if(i===index)b.classList.add('wrong'); }); const ex=document.getElementById('explain'); ex.textContent=item.e; ex.classList.add('show'); document.getElementById('nextQuestion').disabled=false; updateScore(); }
+    function updateScore() { document.getElementById('scoreNumber').textContent=`${score}/${questions.length}`; document.getElementById('scoreRing').style.setProperty('--score',`${score/questions.length*100}%`); document.getElementById('scoreMessage').textContent = qi < questions.length-1 ? 'Cada error es una marca útil en la carta.' : (score>=5 ? 'Buen dominio de la secuencia básica.' : 'Conviene repetir las lecciones 2 a 5.'); }
+    document.getElementById('nextQuestion').addEventListener('click',()=>{ if(qi<questions.length-1){qi++;renderQuestion();}else{toast(`Evaluación terminada: ${score}/${questions.length}`);} });
+    document.getElementById('resetQuiz').addEventListener('click',()=>{qi=0;score=0;updateScore();renderQuestion();}); renderQuestion();
+
+    const search = document.getElementById('glossarySearch'); function filterGlossary(){ const term=search.value.trim().toLowerCase(); document.querySelectorAll('.gloss').forEach(card=> card.hidden = !card.textContent.toLowerCase().includes(term)); }
+    search.addEventListener('input',filterGlossary); document.getElementById('clearSearch').addEventListener('click',()=>{search.value='';filterGlossary();search.focus();});
+  </script>
+</body>
+</html>
